@@ -7,9 +7,9 @@ import os
 
 API_TOKEN = 'TOKEN'
 PATH_FOR_DOWNLOAD = 'docs/'
-REGEXP_FOR_FULLNAME = r'^([А-Я][а-я]*)(\s[А-Я][а-я]*)(\s[А-Я][а-я]*)?([\s\-][А-Я][а-я]*)?$'
-REGEXP_FOR_EMAIL = r'^[a-zA-Z]+@[a-zA-z]+\.[a-zA-Z]+$'
-REGEXP_FOR_PHONE = r'^(\+7|8)[\s\-]?(\d{3})[\s\-]?(\d{3})[\s\-]?(\d{2})[\s\-]?(\d{2})'
+# REGEXP_FOR_FULLNAME = r'^([А-Я][а-я]*)(\s[А-Я][а-я]*)(\s[А-Я][а-я]*)?([\s\-][А-Я][а-я]*)?$'
+# REGEXP_FOR_EMAIL = r'^[a-zA-Z]+@[a-zA-z]+\.[a-zA-Z]+$'
+# REGEXP_FOR_PHONE = r'^(\+7|8)[\s\-]?(\d{3})[\s\-]?(\d{3})[\s\-]?(\d{2})[\s\-]?(\d{2})'
 
 PREFERENCE_AGE = 8
 
@@ -98,8 +98,8 @@ def process_name_step(message):
         name = message.text
         if name is None:
             raise Exception("Пришли слово")
-        if not re.fullmatch(REGEXP_FOR_FULLNAME, name):
-            raise Exception("Вы ввели неправильный формат имени")
+#         if not re.fullmatch(REGEXP_FOR_FULLNAME, name):
+#             raise Exception("Вы ввели неправильный формат имени")
         user = User(name)
         user_dict[chat_id] = user
         user.name = name
@@ -120,13 +120,13 @@ def process_birth_step(message):
         birth = message.text
         if birth is None:
             raise Exception("Пришли слово")
-        birth_date = datetime.strptime(birth, "%d.%m.%Y")
-        now_date = datetime.today()
-        user_year = int((now_date - birth_date).days / 365)
-        if user_year < PREFERENCE_AGE:
-            bot.clear_step_handler_by_chat_id(message.chat.id)
-            bot.send_message(message.chat.id, 'Возвращайся, когда подрастешь, салага', reply_markup=markup)
-            return
+#         birth_date = datetime.strptime(birth, "%d.%m.%Y")
+#         now_date = datetime.today()
+#         user_year = int((now_date - birth_date).days / 365)
+#         if user_year < PREFERENCE_AGE:
+#             bot.clear_step_handler_by_chat_id(message.chat.id)
+#             bot.send_message(message.chat.id, 'Возвращайся, когда подрастешь, салага', reply_markup=markup)
+#             return
         user = user_dict[chat_id]
         user.birth = birth
         markup1 = types.ReplyKeyboardMarkup()
@@ -198,8 +198,8 @@ def process_email_step(message):
         email = message.text
         if email is None:
             raise Exception("Пришли слово")
-        if not re.fullmatch(REGEXP_FOR_EMAIL, email):
-            raise Exception("Вы ввели неправильный email")
+#         if not re.fullmatch(REGEXP_FOR_EMAIL, email):
+#             raise Exception("Вы ввели неправильный email")
         user.email = email
         markup3 = types.ReplyKeyboardMarkup(row_width=2, one_time_keyboard=True)
         markup3.add("В первую", "Во вторую")
@@ -240,8 +240,8 @@ def process_parantname_step(message):
         parantname = message.text
         if parantname is None:
             raise Exception("Пришли слово")
-        if not re.fullmatch(REGEXP_FOR_FULLNAME, parantname):
-            raise Exception("Введите праивльные вормат ФИО")
+#         if not re.fullmatch(REGEXP_FOR_FULLNAME, parantname):
+#             raise Exception("Введите праивльные вормат ФИО")
 
         user.parantname = parantname
         msg = bot.reply_to(message, 'Введите свой телефон. ' + stop_msg)
@@ -262,8 +262,8 @@ def process_phone_step(message):
         phone = message.text
         if phone is None:
             raise Exception("Пришли текст")
-        if not re.fullmatch(REGEXP_FOR_PHONE, phone):
-            raise Exception("Не правильный номер телефона")
+#         if not re.fullmatch(REGEXP_FOR_PHONE, phone):
+#             raise Exception("Не правильный номер телефона")
 
         user.phone = phone
         msg = bot.reply_to(message, 'Введите телефон родителя. ' + stop_msg)
@@ -284,8 +284,8 @@ def process_parantphone_step(message):
         parantphone = message.text
         if parantname is None:
             raise Exception("Пришли слово")
-        if not re.fullmatch(REGEXP_FOR_PHONE, parantphone):
-            raise Exception("Не правильный телефон")
+#         if not re.fullmatch(REGEXP_FOR_PHONE, parantphone):
+#             raise Exception("Не правильный телефон")
 
         user.parantphone = parantphone
         msg = bot.reply_to(message, 'Кинь заявление на зачисление ' + formats_msg + '. ' + stop_msg)
