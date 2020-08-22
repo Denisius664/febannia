@@ -3,6 +3,7 @@ from telebot import types
 from datetime import datetime
 import re
 import requests
+import os
 
 API_TOKEN = 'TOKEN'
 PATH_FOR_DOWNLOAD = 'docs/'
@@ -57,6 +58,8 @@ def get_file_id(message):
 
 
 def download_and_write_to_file(file_id):
+    if not os.path.exists(PATH_FOR_DOWNLOAD):
+        os.makedirs(PATH_FOR_DOWNLOAD)
     file_info = bot.get_file(file_id)
     file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN, file_info.file_path))
     open(PATH_FOR_DOWNLOAD + str(file_id), "wb").write(file.content)
