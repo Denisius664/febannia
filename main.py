@@ -282,7 +282,7 @@ def process_parantphone_step(message):
         chat_id = message.chat.id
         user = user_dict[chat_id]
         parantphone = message.text
-        if parantname is None:
+        if parantphone is None:
             raise Exception("Пришли слово")
 #         if not re.fullmatch(REGEXP_FOR_PHONE, parantphone):
 #             raise Exception("Не правильный телефон")
